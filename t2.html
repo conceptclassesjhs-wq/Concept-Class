@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GoJS Collapsible Tree (Left to Right)</title>
+  <script src="https://unpkg.com/gojs/release/go.js"></script>
+</head>
+<body>
+  <div id="myDiagramDiv" style="width:100%; height:500px; border:1px solid black"></div>
+
+  <script>
+    function init() {
+      const $ = go.GraphObject.make;
+
+      const myDiagram = $(go.Diagram, "myDiagramDiv",
+        {
+          layout: $(go.TreeLayout, {
+            angle: 0,         // ?? grow to the right
+            layerSpacing: 40  // spacing between levels
+          }),
+          initialContentAlignment: go.Spot.LeftCenter // ?? root at left side
+        });
+
+      // Node template with expand/collapse
+      myDiagram.nodeTemplate =
+        $(go.Node, "Auto",
+          new go.Binding("isTreeExpanded", "isTreeExpanded"),
+          $(go.Shape, "RoundedRectangle",
+            { fill: "lightblue", stroke: "darkblue" }),
+          $(go.Panel, "Horizontal",
+            $("TreeExpanderButton"),
+            $(go.TextBlock,
+              { margin: 6, font: "bold 14px sans-serif", stroke: "black" },
+              new go.Binding("text", "name"),
+              new go.Binding("stroke", "color")
+            )
+          )
+        );
+
+      // Sample data
+      const nodeDataArray = [
+        { key: 1, name: "Root", color: "darkgreen", isTreeExpanded: false},  // root expanded
+        { key: 2, parent: 1, name: "Child 1", color: "blue", isTreeExpanded: false },
+        { key: 3, parent: 1, name: "Child 2", color: "purple", isTreeExpanded: false },
+        { key: 4, parent: 1, name: "Grandchild 1", color: "red", isTreeExpanded: false },
+        { key: 5, parent: 1, name: "Grandchild 2", color: "orange", isTreeExpanded: false },
+        { key: 6, parent: 2, name: "Grandchild 3", color: "brown", isTreeExpanded: false },
+	{ key: 7, parent: 2, name: "Child 1", color: "blue", isTreeExpanded: false },
+        { key: 8, parent: 2, name: "Child 2", color: "purple", isTreeExpanded: false },
+        { key: 9, parent: 2, name: "Grandchild 1", color: "red", isTreeExpanded: false },
+        { key: 10, parent: 2, name: "Grandchild 2", color: "orange", isTreeExpanded: false },
+        { key: 11, parent: 2, name: "Grandchild 3", color: "brown", isTreeExpanded: false },
+	{ key: 12, parent: 3, name: "Grandchild 3", color: "brown", isTreeExpanded: false },
+	{ key: 13, parent: 3, name: "Child 1", color: "blue", isTreeExpanded: false },
+        { key: 14, parent: 3, name: "Child 2", color: "purple", isTreeExpanded: false },
+        { key: 15, parent: 3, name: "Grandchild 1", color: "red", isTreeExpanded: false },
+        { key: 16, parent: 3, name: "Grandchild 2", color: "orange", isTreeExpanded: false },
+        { key: 17, parent: 3, name: "Grandchild 3", color: "brown", isTreeExpanded: false },
+	{ key: 18, parent: 4, name: "Grandchild 3", color: "brown", isTreeExpanded: false },
+	{ key: 19, parent: 4, name: "Grandchild 3", color: "brown", isTreeExpanded: false },
+	{ key: 20, parent: 4, name: "Child 1", color: "blue", isTreeExpanded: false },
+        { key: 21, parent: 4, name: "Child 2", color: "purple", isTreeExpanded: false },
+        { key: 22, parent: 14, name: "Grandchild 1", color: "red", isTreeExpanded: false },
+        { key: 23, parent: 14, name: "Grandchild 2", color: "orange", isTreeExpanded: false },
+        { key: 24, parent: 14, name: "Grandchild 3", color: "brown", isTreeExpanded: false }
+      ];
+
+      myDiagram.model = new go.TreeModel(nodeDataArray);
+    }
+
+    init();
+  </script>
+</body>
+</html>
