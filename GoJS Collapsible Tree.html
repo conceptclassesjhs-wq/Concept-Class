@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)file:///C:/Users/aviji/Desktop/test1.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>GoJS Collapsible Tree</title>
+  <script src="./GoJS Collapsible Tree_files/go.js.download"></script>
+</head>
+<body>
+  <div id="myDiagramDiv" style="width: 100%; height: 800px; border: 1px solid black; position: relative; -webkit-tap-highlight-color: rgba(255, 255, 255, 0);"><canvas tabindex="0" width="1871" height="1000" style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 1497px; height: 800px;"></canvas><div style="position: absolute; overflow: auto; width: 1497px; height: 800px; z-index: 1;"><div style="position: absolute; width: 1px; height: 1px;"></div></div></div>
+
+  <script>
+    function init() {
+      const $ = go.GraphObject.make;
+
+      const myDiagram = $(go.Diagram, "myDiagramDiv",
+        {
+          layout: $(go.TreeLayout, { angle: 90, layerSpacing: 30 })
+        });
+
+      // Node template
+      myDiagram.nodeTemplate =
+        $(go.Node, "Horizontal",
+          { selectionAdorned: false },
+          $("TreeExpanderButton"), // adds + / - button
+          $(go.TextBlock,
+            { font: "14px sans-serif", stroke: "black" },
+            new go.Binding("text", "name"))
+        );
+
+      // Sample data
+      const nodeDataArray = [
+        { key: 1, name: "Root" },
+        { key: 2, parent: 1, name: "Child 1" },
+        { key: 3, parent: 1, name: "Child 2" },
+	{ key: 4, parent: 1, name: "Child 3" },
+        { key: 5, parent: 2, name: "Grandchild 1" },
+        { key: 6, parent: 2, name: "Grandchild 2" },
+        { key: 7, parent: 3, name: "Grandchild 3" },
+	{ key: 8, parent: 4, name: "Grandchild 1" },
+        { key: 9, parent: 4, name: "Grandchild 2" }
+      ];
+
+      myDiagram.model = new go.TreeModel(nodeDataArray);
+    }
+
+    init();
+  </script>
+
+
+</body></html>
